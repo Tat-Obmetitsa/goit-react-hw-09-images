@@ -1,21 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import s from '../Modal/Modal.module.css';
 const modalRoot = document.querySelector('#modal-root');
 
 export default function Modal ({children, onClose}) {
-  useEffect(() => {
-    const closeModal = e => {
+  const closeModal = useCallback((e) => {
     if (e.code === 'Escape') {
-      console.log('Нажали ESC, нужно закрыть модалку');
-      onClose();
-    }
-  };
-  window.addEventListener('keydown', closeModal);
-  return () => {
+     onClose()}
+    }, [onClose]);
+
+  useEffect(() => {
+    window.addEventListener('keydown', closeModal);
+    return () => {
     window.removeEventListener('keydown', closeModal);
     }
-  }, [onClose]);
+  }, [closeModal]);
  
 
   const closeModalClick = event => {
