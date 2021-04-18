@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import Modal from '../Modal/Modal';
 import s from '../ImageGallery/ImageGallery.module.css';
@@ -8,16 +7,16 @@ import s from '../ImageGallery/ImageGallery.module.css';
 export default function ImageGallery ({ images }) {
   const [showModal, setShowModal] = useState(false);
   const [modalImage, setModalImage] = useState('');
-  // const [url, setUrl] = useState('');
 
+  const  toggleModal = useCallback(() => {
+    setShowModal(prevShowModal => !prevShowModal);
+    setModalImage(null);
+  }, []);
 
-  const  toggleModal = () => {
-    setShowModal(!showModal);
-  };
-  const openModal = modalImage => {
+  const openModal = useCallback((modalImage)  => {
     toggleModal();
-    setModalImage(modalImage );
-  };
+    setModalImage(modalImage);
+  }, [toggleModal]);
 
 
   return (

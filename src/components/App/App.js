@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import SearchBar from '../Searchbar/Searchbar';
 import s from '../App/App.module.css';
 import Button from '../Button/Button';
@@ -42,18 +42,18 @@ export default function App () {
 }, [currentPage, seachQuery]);
 
 
-  const updatePage = () => {
+  const updatePage = useCallback(() => {
     setCurrentPage(prevPage => prevPage + 1);
-  };
+  }, []);
 
-  const  onChangeQuery = seachQuery => {
+  const  onChangeQuery = useCallback((seachQuery) => {
     setSeachQuery(seachQuery);
     setIsLoading(true);
     setCurrentPage(1);
     setImages([]);
     setError(null);
   
-    };
+    }, []);
   
 
   const shouldRenderLoadMoreButton = images.length > 11 && !isLoading;
